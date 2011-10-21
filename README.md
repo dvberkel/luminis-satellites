@@ -1,4 +1,4 @@
-Luminis Satelite
+Luminis Satellite
 =================
 
 This project is a compendium to the 
