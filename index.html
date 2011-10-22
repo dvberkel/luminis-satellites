@@ -2,6 +2,12 @@
 	<head>
 		<title>Luminis &raquo; Satellites</title>
 		<script type="text/javascript">
+			var DocumentTree = (function(){
+				return function(name){
+					this.name = name;
+				};
+			})()
+			
 			var tree = {
 				name: "Luminis",
 				satellites: [
@@ -31,6 +37,8 @@
 					}
 				]
 			};
+			
+			console.log(new DocumentTree("Luminis"));
 		</script>
 	</head>
 	<body>
