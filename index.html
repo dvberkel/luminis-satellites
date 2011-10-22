@@ -11,42 +11,18 @@
 						this.satellites.push(satellite);
 						return this;
 					}
-				}
+					
+					this.accept = function(visitor) {
+						visitor.visit(this.name);
+						for(var index = 0; index < this.satellites.length; index++) {
+							this.satellites[index].accept(visitor);
+						}
+					}
+				};
 				return DocumentTree;
 			})()
 			
-			var tree = {
-				name: "Luminis",
-				satellites: [
-					{
-						name: "OSGI",
-						satellites: [
-							{name: "Technology", satellites: []},
-							{name: "Academy", satellites: []},
-							{name: "Interaction", satellites: []}
-						]
-					},
-					{
-						name: "Embedded Devices",
-						satellites: [
-							{name: "Technology", satellites: []},
-							{name: "Academy", satellites: []},
-							{name: "Interaction", satellites: []}
-						]
-					},
-					{
-						name: "Semantic Web",
-						satellites: [
-							{name: "Technology", satellites: []},
-							{name: "Academy", satellites: []},
-							{name: "Interaction", satellites: []}
-						]
-					}
-				]
-			};
-			
-			console.log(
-				new DocumentTree("Luminis")
+			var tree = 	new DocumentTree("Luminis")
 					.add(new DocumentTree("OSGI")
 						.add(new DocumentTree("Technology"))
 						.add(new DocumentTree("Academy"))
@@ -59,8 +35,26 @@
 						.add(new DocumentTree("Technology"))
 						.add(new DocumentTree("Academy"))
 						.add(new DocumentTree("Interaction"))
-					)
-			);
+					);
+
+			
+			var Counter = function() {
+				var count = 0;
+				
+				this.visit = function(name) {
+					count++;
+				}
+				
+				this.getCount = function() {
+					return count;
+				}
+			};
+			
+			console.log(tree);
+			
+			var counter = new Counter();
+			tree.accept(counter);
+			console.log(counter.getCount());
 		</script>
 	</head>
 	<body>
