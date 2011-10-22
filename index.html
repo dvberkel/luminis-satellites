@@ -4,18 +4,18 @@
 		<script type="text/javascript">
 			var DocumentTree = (function(){
 				var DocumentTree = function(name) {
-					this.name = name;
-					this.satellites = [];
+					var _name = name;
+					var _satellites = [];
 					
 					this.add = function(satellite) {
-						this.satellites.push(satellite);
+						_satellites.push(satellite);
 						return this;
 					}
 					
 					this.accept = function(visitor) {
-						visitor.visit(this.name);
-						for(var index = 0; index < this.satellites.length; index++) {
-							this.satellites[index].accept(visitor);
+						visitor.visit(_name);
+						for(var index = 0; index < _satellites.length; index++) {
+							_satellites[index].accept(visitor);
 						}
 					}
 				};
@@ -39,14 +39,14 @@
 
 			
 			var Counter = function() {
-				var count = 0;
+				var _count = 0;
 				
 				this.visit = function(name) {
-					count++;
+					_count++;
 				}
 				
 				this.getCount = function() {
-					return count;
+					return _count;
 				}
 			};
 			
