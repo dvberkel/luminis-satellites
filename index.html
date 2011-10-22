@@ -3,9 +3,11 @@
 		<title>Luminis &raquo; Satellites</title>
 		<script type="text/javascript">
 			var DocumentTree = (function(){
-				return function(name){
+				var DocumentTree = function(name) {
 					this.name = name;
-				};
+					this.satellites = [];
+				}
+				return DocumentTree;
 			})()
 			
 			var tree = {
