@@ -45,7 +45,22 @@
 				]
 			};
 			
-			console.log(new DocumentTree("Luminis").add(new DocumentTree("OSGI")));
+			console.log(
+				new DocumentTree("Luminis")
+					.add(new DocumentTree("OSGI")
+						.add(new DocumentTree("Technology"))
+						.add(new DocumentTree("Academy"))
+						.add(new DocumentTree("Interaction"))
+					).add(new DocumentTree("Embedded Devices")
+						.add(new DocumentTree("Technology"))
+						.add(new DocumentTree("Academy"))
+						.add(new DocumentTree("Interaction"))
+					).add(new DocumentTree("Semantic Web")
+						.add(new DocumentTree("Technology"))
+						.add(new DocumentTree("Academy"))
+						.add(new DocumentTree("Interaction"))
+					)
+			);
 		</script>
 	</head>
 	<body>
