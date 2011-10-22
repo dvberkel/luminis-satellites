@@ -6,6 +6,11 @@
 				var DocumentTree = function(name) {
 					this.name = name;
 					this.satellites = [];
+					
+					this.add = function(satellite) {
+						this.satellites.push(satellite);
+						return this;
+					}
 				}
 				return DocumentTree;
 			})()
@@ -40,7 +45,7 @@
 				]
 			};
 			
-			console.log(new DocumentTree("Luminis"));
+			console.log(new DocumentTree("Luminis").add(new DocumentTree("OSGI")));
 		</script>
 	</head>
 	<body>
