@@ -8,8 +8,10 @@
 					var _satellites = [];
 					
 					this.add = function(satellite) {
+						var body = this;
+						satellite.getBody = function(){ return body };
 						_satellites.push(satellite);
-						return this;
+						return body;
 					}
 					
 					this.accept = function(visitor, upToLevel) {
@@ -20,6 +22,10 @@
 								_satellites[index].accept(visitor, upToLevel - 1);
 							}
 						}
+					}
+					
+					this.getBody = function() {
+						return this;
 					}
 				};
 				return DocumentTree;
@@ -62,6 +68,10 @@
 			counter = new Counter();
 			tree.accept(counter, 1);
 			console.log(counter.getCount());
+			
+			var spy = new DocumentTree("spy");
+			tree.add(spy);
+			console.log(tree === spy.getBody());
 		</script>
 	</head>
 	<body>
