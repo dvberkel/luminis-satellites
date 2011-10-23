@@ -2,7 +2,7 @@
 	<head>
 		<title>Luminis &raquo; Satellites</title>
 		<script type="text/javascript">
-			var DocumentTree = (function(){
+			(function(){
 				var DocumentTree = function(name) {
 					var _name = name;
 					var _satellites = [];
@@ -28,8 +28,8 @@
 						return this;
 					}
 				};
-				return DocumentTree;
-			})()
+				window.DocumentTree = DocumentTree;
+			})();
 			
 			var tree = 	new DocumentTree("Luminis")
 					.add(new DocumentTree("OSGI")
