@@ -12,10 +12,13 @@
 						return this;
 					}
 					
-					this.accept = function(visitor) {
+					this.accept = function(visitor, upToLevel) {
+						if (typeof upToLevel == 'undefined') {upToLevel = -1;}
 						visitor.visit(_name);
-						for(var index = 0; index < _satellites.length; index++) {
-							_satellites[index].accept(visitor);
+						if (upToLevel != 0) {
+							for(var index = 0; index < _satellites.length; index++) {
+								_satellites[index].accept(visitor, upToLevel - 1);
+							}
 						}
 					}
 				};
@@ -54,6 +57,10 @@
 			
 			var counter = new Counter();
 			tree.accept(counter);
+			console.log(counter.getCount());
+
+			counter = new Counter();
+			tree.accept(counter, 1);
 			console.log(counter.getCount());
 		</script>
 	</head>
