@@ -31,17 +31,31 @@
 					this.pass = function(filter) {
 						return filter(_name);
 					}
+					
+					this.downTo = function(name, walker) {
+						var filter = function(aName) { return aName == name; }
+						for (var index = 0; index < _satellites.length; index++) {
+							var satellite = _satellites[index];
+							if (satellite.pass(filter)) {
+								walker.currentRoot(satellite)
+							}
+						}
+					}
 				};
 				window.DocumentTree = DocumentTree;
 				
 				var DocumentTreeWalker = function(documentTree) {
 					var _currentRoot = documentTree
 					
-					this.currentRoot = function(documentTree) {
-						if (typeof documentTree != 'undefined') {
-							_currentRoot = documentTree;
+					this.currentRoot = function(aDocumentTree) {
+						if (typeof aDocumentTree != 'undefined') {
+							_currentRoot = aDocumentTree;
 						}
 						return _currentRoot;
+					}
+					
+					this.downTo = function(name) {
+						_currentRoot.downTo(name, this);
 					}
 				}
 				window.DocumentTreeWalker = DocumentTreeWalker;
@@ -98,6 +112,9 @@
 			console.log(tree.pass(spyFilter));
 			console.log(spy.pass(spyFilter));
 			
+			walker = new DocumentTreeWalker(tree);
+			walker.downTo("spy");
+			console.log(walker.currentRoot() === spy);
 		</script>
 	</head>
 	<body>
