@@ -29,6 +29,13 @@
 					}
 				};
 				window.DocumentTree = DocumentTree;
+				
+				var DocumentTreeWalker = function(documentTree) {
+					var _currentRoot = documentTree
+					
+					
+				}
+				window.DocumentTreeWalker = DocumentTreeWalker;
 			})();
 			
 			var tree = 	new DocumentTree("Luminis")
@@ -72,6 +79,9 @@
 			var spy = new DocumentTree("spy");
 			tree.add(spy);
 			console.log(tree === spy.getBody());
+			
+			var walker = new DocumentTreeWalker(tree);
+			console.log(walker);
 		</script>
 	</head>
 	<body>
