@@ -27,6 +27,10 @@
 					this.getBody = function() {
 						return this;
 					}
+					
+					this.pass = function(filter) {
+						return filter(_name);
+					}
 				};
 				window.DocumentTree = DocumentTree;
 				
@@ -87,6 +91,13 @@
 			
 			var walker = new DocumentTreeWalker(tree);
 			console.log(walker.currentRoot(spy) === spy);
+			
+			var spyFilter = function(name) {
+				return name == "spy";
+			}
+			console.log(tree.pass(spyFilter));
+			console.log(spy.pass(spyFilter));
+			
 		</script>
 	</head>
 	<body>
