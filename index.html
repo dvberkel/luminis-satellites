@@ -33,7 +33,10 @@
 				var DocumentTreeWalker = function(documentTree) {
 					var _currentRoot = documentTree
 					
-					this.currentRoot = function() {
+					this.currentRoot = function(documentTree) {
+						if (typeof documentTree != 'undefined') {
+							_currentRoot = documentTree;
+						}
 						return _currentRoot;
 					}
 				}
@@ -83,7 +86,7 @@
 			console.log(tree === spy.getBody());
 			
 			var walker = new DocumentTreeWalker(tree);
-			console.log(walker.currentRoot() === tree);
+			console.log(walker.currentRoot(spy) === spy);
 		</script>
 	</head>
 	<body>
