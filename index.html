@@ -7,6 +7,12 @@
 					var _name = name;
 					var _satellites = [];
 					
+					var performOnSatellites = function(aFunction) {
+						for (var index = 0; index < _satellites.length; index++) {
+							aFunction(_satellites[index]);
+						}
+					}
+					
 					this.add = function(satellite) {
 						var body = this;
 						satellite.getBody = function(){ return body };
@@ -18,9 +24,9 @@
 						if (typeof upToLevel == 'undefined') {upToLevel = -1;}
 						visitor.visit(_name);
 						if (upToLevel != 0) {
-							for(var index = 0; index < _satellites.length; index++) {
-								_satellites[index].accept(visitor, upToLevel - 1);
-							}
+							performOnSatellites(function(satellite){
+								satellite.accept(visitor, upToLevel - 1);
+							});
 						}
 					}
 					
@@ -34,12 +40,11 @@
 					
 					this.downTo = function(name, walker) {
 						var filter = function(aName) { return aName == name; }
-						for (var index = 0; index < _satellites.length; index++) {
-							var satellite = _satellites[index];
+						performOnSatellites(function(satellite){
 							if (satellite.pass(filter)) {
 								walker.currentRoot(satellite)
 							}
-						}
+						});
 					}
 					
 					this.up = function(walker) {
