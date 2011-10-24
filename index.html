@@ -41,6 +41,10 @@
 							}
 						}
 					}
+					
+					this.up = function(walker) {
+						walker.currentRoot(walker.currentRoot().getBody());
+					}
 				};
 				window.DocumentTree = DocumentTree;
 				
@@ -56,6 +60,10 @@
 					
 					this.downTo = function(name) {
 						_currentRoot.downTo(name, this);
+					}
+					
+					this.up = function() {
+						_currentRoot.up(this);
 					}
 				}
 				window.DocumentTreeWalker = DocumentTreeWalker;
@@ -115,6 +123,9 @@
 			walker = new DocumentTreeWalker(tree);
 			walker.downTo("spy");
 			console.log(walker.currentRoot() === spy);
+			
+			walker.up();
+			console.log(walker.currentRoot() == tree);
 		</script>
 	</head>
 	<body>
