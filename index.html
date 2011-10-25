@@ -39,16 +39,42 @@
 					walker.currentRoot().accept(visitor, 0);
 					console.log("down to " + visitor.names[0]);				
 				}
+			}).add({
+				up: function(walker) {
+					var visitor = new NameCollector();
+					walker.currentRoot().accept(visitor, 0);
+					this.append(visitor.names[0]);
+				},
+				down: function(walker) {
+					var visitor = new NameCollector();
+					walker.currentRoot().accept(visitor, 0);
+					this.append(visitor.names[0]);				
+				},
+				append : function(name) {
+					var ol = document.getElementById('feedback');
+					var li = document.createElement('li');
+					var text = document.createTextNode(name);
+					li.appendChild(text);
+					ol.appendChild(li);
+				}
 			});
 			
-			walker.downTo("OSGI");
-			walker.downTo("Academy");
-			walker.up();
-			walker.downTo("Introduction");
-			walker.up().up();
+			window.onload = function() {
+				walker.downTo("OSGI");
+				walker.downTo("Academy");
+				walker.up();
+				walker.downTo("Introduction");
+				walker.up().up();
+			}
 		</script>
 	</head>
 	<body>
 		<h1>Satellites</h1>
+		<h2>Execution Path</h2>
+		<p>
+			Starting at the Luminis we visited
+			<ol id="feedback">
+			</ol>
+		</p>
 	</body>
 </html>
