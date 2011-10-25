@@ -73,15 +73,18 @@
 		this.downTo = function(name) {
 			_currentRoot.downTo(name, _walker);
 			notify("down");
+			return _walker;
 		}
 	
 		this.up = function() {
 			_currentRoot.up(_walker);
 			notify("up");
+			return _walker;
 		}
 	
 		this.add = function(observer) {
 			_observers.push(observer);
+			return _walker;
 		}
 	}
 	window.DocumentTreeWalker = DocumentTreeWalker;
