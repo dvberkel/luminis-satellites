@@ -50,6 +50,7 @@
 	window.DocumentTree = DocumentTree;
 
 	var DocumentTreeWalker = function(documentTree) {
+		var _walker = this;
 		var _currentRoot = documentTree
 		var _observers = [];
 	
@@ -57,7 +58,7 @@
 			for (var index = 0; index < _observers.length; index++) {
 				var observer = _observers[index];
 				if (observer[direction]) {
-					observer[direction](this);
+					observer[direction](_walker);
 				}
 			}
 		}
@@ -70,12 +71,12 @@
 		}
 	
 		this.downTo = function(name) {
-			_currentRoot.downTo(name, this);
+			_currentRoot.downTo(name, _walker);
 			notify("down");
 		}
 	
 		this.up = function() {
-			_currentRoot.up(this);
+			_currentRoot.up(_walker);
 			notify("up");
 		}
 	

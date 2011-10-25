@@ -4,71 +4,49 @@
 		<script type="text/javascript" src="js/satellite.js"></script>
 		<script type="text/javascript">
 			var tree = 	new DocumentTree("Luminis")
-					.add(new DocumentTree("OSGI")
-						.add(new DocumentTree("Technology"))
-						.add(new DocumentTree("Academy"))
-						.add(new DocumentTree("Introduction"))
-					).add(new DocumentTree("Embedded Devices")
-						.add(new DocumentTree("History"))
-						.add(new DocumentTree("Roadmap"))
-						.add(new DocumentTree("Interaction"))
-					).add(new DocumentTree("Semantic Web")
-						.add(new DocumentTree("Contributers"))
-						.add(new DocumentTree("Community"))
-						.add(new DocumentTree("Information"))
-					);
-
-			
-			var Counter = function() {
-				var _count = 0;
-				
-				this.visit = function(name) {
-					_count++;
-				}
-				
-				this.getCount = function() {
-					return _count;
-				}
-			};
-			
-			console.log(tree);
-			
-			var counter = new Counter();
-			tree.accept(counter);
-			console.log(counter.getCount());
-
-			counter = new Counter();
-			tree.accept(counter, 1);
-			console.log(counter.getCount());
-			
-			var spy = new DocumentTree("spy");
-			tree.add(spy);
-			console.log(tree === spy.getBody());
+				.add(new DocumentTree("OSGI")
+					.add(new DocumentTree("Technology"))
+					.add(new DocumentTree("Academy"))
+					.add(new DocumentTree("Introduction"))
+				).add(new DocumentTree("Embedded Devices")
+					.add(new DocumentTree("History"))
+					.add(new DocumentTree("Roadmap"))
+					.add(new DocumentTree("Interaction"))
+				).add(new DocumentTree("Semantic Web")
+					.add(new DocumentTree("Contributers"))
+					.add(new DocumentTree("Community"))
+					.add(new DocumentTree("Information"))
+				);
 			
 			var walker = new DocumentTreeWalker(tree);
-			console.log(walker.currentRoot(spy) === spy);
 			
-			var spyFilter = function(name) {
-				return name == "spy";
+			var NameCollector = function() {
+				this.names = [];
+				
+				this.visit = function(name) {
+					this.names.push(name);
+				}
 			}
-			console.log(tree.pass(spyFilter));
-			console.log(spy.pass(spyFilter));
-			
-			walker = new DocumentTreeWalker(tree);
-			walker.downTo("spy");
-			console.log(walker.currentRoot() === spy);
-			
-			walker.up();
-			console.log(walker.currentRoot() == tree);
 			
 			walker.add({
-				up: function(walker){console.log("went up");}, 
-				down: function(walker){console.log("went down");}
+				up: function(walker) {
+					var visitor = new NameCollector();
+					walker.currentRoot().accept(visitor, 0);
+					console.log("up to " + visitor.names[0]);
+				},
+				down: function(walker) {
+					var visitor = new NameCollector();
+					walker.currentRoot().accept(visitor, 0);
+					console.log("down to " + visitor.names[0]);				
+				}
 			});
-			walker.downTo("spy");
-			walker.up();
+			
 			walker.downTo("OSGI");
 			walker.downTo("Academy");
+			walker.up();
+			walker.downTo("Introduction");
+			walker.up();
+			walker.up();
 		</script>
 	</head>
 	<body>
